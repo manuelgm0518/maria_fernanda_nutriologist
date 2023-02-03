@@ -12,7 +12,7 @@ class NutritionPlanTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
       title: Text(nutritionPlan.name),
-      subtitle: Text(DateFormat('dd-MM-yyyy').format(nutritionPlan.model.createdAt)),
+      subtitle: Text(DateFormat('dd-MM-yyyy').format(nutritionPlan.createdAt)),
       trailing: IconButton(
         icon: const Icon(UniconsLine.share),
         onPressed: () => ScaffoldMessenger.of(context).showSnackBar(

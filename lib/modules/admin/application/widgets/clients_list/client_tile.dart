@@ -12,7 +12,7 @@ class ClientTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
       title: Text(client.fullName),
-      subtitle: Text(DateFormat('dd-MM-yyyy').format(client.model.createdAt)),
+      subtitle: Text(DateFormat('dd-MM-yyyy').format(client.createdAt)),
       trailing: Text(client.subscriptionPlan.name),
     );
   }

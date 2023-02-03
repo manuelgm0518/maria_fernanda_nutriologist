@@ -7,8 +7,14 @@ part 'nutrition_plan.g.dart';
 
 @freezed
 class NutritionPlan with _$NutritionPlan {
-  factory NutritionPlan({
-    required Model model,
+  static String tableName = 'nutrition_plans';
+  const NutritionPlan._();
+
+  @Implements<Model>()
+  const factory NutritionPlan({
+    required String id,
+    required DateTime createdAt,
+    required DateTime updatedAt,
     required String name,
     required String fileUrl,
   }) = _NutritionPlan;

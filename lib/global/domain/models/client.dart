@@ -9,9 +9,14 @@ enum SubscriptionPlan { free, tier1, tier2 }
 
 @freezed
 class Client with _$Client {
+  static String tableName = 'clients';
   const Client._();
-  factory Client({
-    required Model model,
+
+  @Implements<Model>()
+  const factory Client({
+    required String id,
+    required DateTime createdAt,
+    required DateTime updatedAt,
     required String firstName,
     required String lastName,
     required String accessCode,
