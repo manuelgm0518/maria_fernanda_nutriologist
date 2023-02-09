@@ -9,7 +9,7 @@ part 'client_update_params.g.dart';
 class ClientUpdateParams with _$ClientUpdateParams {
   factory ClientUpdateParams(
     String id, {
-    String? fistName,
+    String? firstName,
     String? lastName,
     SubscriptionPlan? subscriptionPlan,
   }) = _ClientUpdateParams;

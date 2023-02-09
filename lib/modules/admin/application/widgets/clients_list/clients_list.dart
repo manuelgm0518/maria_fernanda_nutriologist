@@ -5,7 +5,9 @@ import 'client_tile.dart';
 
 class ClientsList extends StatelessWidget {
   final List<Client> clients;
-  const ClientsList(this.clients, {Key? key}) : super(key: key);
+  final void Function(Client client)? onClientTap;
+
+  const ClientsList(this.clients, {this.onClientTap, Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -13,7 +15,10 @@ class ClientsList extends StatelessWidget {
       itemCount: clients.length,
       itemBuilder: (context, index) {
         final client = clients[index];
-        return ClientTile(client);
+        return ClientTile(
+          client,
+          onTap: () => onClientTap?.call(client),
+        );
       },
     );
   }

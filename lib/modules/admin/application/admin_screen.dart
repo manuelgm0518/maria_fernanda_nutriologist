@@ -1,38 +1,34 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:unicons/unicons.dart';
 
-import 'views/clients_view.dart';
-import 'views/nutrition_plans_view.dart';
+import '../../../core/app_router.gr.dart';
 
-class AdminScreen extends StatefulWidget {
+class AdminScreen extends StatelessWidget {
   const AdminScreen({Key? key}) : super(key: key);
 
   @override
-  State<AdminScreen> createState() => _AdminScreenState();
-}
-
-class _AdminScreenState extends State<AdminScreen> {
-  int index = 0;
-  void setIndex(int value) {
-    setState(() => index = value);
-  }
-
-  @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text('Admin')),
-      body: const [
-        ClientsView(),
-        NutritionPlansView(),
-      ].elementAt(index),
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: index,
-        onTap: (value) => setIndex(value),
-        items: const [
-          BottomNavigationBarItem(icon: Icon(UniconsLine.users_alt), label: 'Clientes'),
-          BottomNavigationBarItem(icon: Icon(UniconsLine.book_reader), label: 'Planes'),
-        ],
-      ),
+    return AutoTabsRouter.pageView(
+      routes: const [
+        ClientsViewRoute(),
+        NutritionPlansViewRoute(),
+      ],
+      builder: (context, child, _) {
+        final tabsRouter = AutoTabsRouter.of(context);
+        return Scaffold(
+          body: child,
+          appBar: AppBar(title: Text(tabsRouter.currentPath)),
+          bottomNavigationBar: BottomNavigationBar(
+            currentIndex: tabsRouter.activeIndex,
+            onTap: tabsRouter.setActiveIndex,
+            items: const [
+              BottomNavigationBarItem(icon: Icon(UniconsLine.users_alt), label: 'Clientes'),
+              BottomNavigationBarItem(icon: Icon(UniconsLine.book_reader), label: 'Planes'),
+            ],
+          ),
+        );
+      },
     );
   }
 }

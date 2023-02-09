@@ -2,7 +2,6 @@ import 'dart:math';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dartz/dartz.dart';
-import 'package:uuid/uuid.dart';
 
 import '../../../core/utils/utils.dart';
 import '../../domain/models/models.dart';
@@ -13,17 +12,18 @@ class ClientsFirebaseDataSource implements ClientsRepository {
   late final CollectionReference<Client> clientsCollection;
 
   ClientsFirebaseDataSource() {
-    clientsCollection = FirebaseFirestore.instance.collection(Client.tableName).withConverter<Client>(
-          toFirestore: (client, _) => client.toJson(),
-          fromFirestore: (snapshot, _) => Client.fromJson(snapshot.data()!),
-        );
+    clientsCollection = firestoreCollection<ClientModel>(
+      collectionName: Client.tableName,
+      fromJson: (json) => ClientModel.fromJson(json),
+      toJson: (model) => model.toJson(),
+    );
   }
 
   @override
   Future<Either<Failure, Client>> create(ClientCreateParams params) async {
     try {
       final newClient = Client(
-        id: const Uuid().v4(),
+        id: '',
         createdAt: DateTime.now(),
         updatedAt: DateTime.now(),
         firstName: params.firstName,
@@ -75,7 +75,7 @@ class ClientsFirebaseDataSource implements ClientsRepository {
   Future<Either<Failure, Client>> updateById(ClientUpdateParams params) async {
     try {
       final document = clientsCollection.doc(params.id);
-      await document.update({...params.toJson(), 'updatedAt': DateTime.now()});
+      await document.update({...params.toJson(), 'updatedAt': DateTime.now()}..remove('id'));
       final client = (await document.get()).data();
       return Right(client!);
     } on FirebaseException catch (error) {

@@ -21,7 +21,7 @@ class Client with _$Client {
     required String lastName,
     required String accessCode,
     @Default(SubscriptionPlan.free) SubscriptionPlan subscriptionPlan,
-  }) = _Client;
+  }) = ClientModel;
 
   String get fullName => '$firstName $lastName';
 
