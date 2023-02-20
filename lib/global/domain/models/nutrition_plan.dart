@@ -17,7 +17,7 @@ class NutritionPlan with _$NutritionPlan {
     required DateTime updatedAt,
     required String name,
     required String fileUrl,
-  }) = _NutritionPlan;
+  }) = NutritionPlanModel;
 
   factory NutritionPlan.fromJson(Map<String, dynamic> json) => _$NutritionPlanFromJson(json);
 }

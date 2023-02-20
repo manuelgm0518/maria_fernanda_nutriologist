@@ -20,6 +20,21 @@ class ClientsFirebaseDataSource implements ClientsRepository {
   }
 
   @override
+  Future<Either<Failure, Stream<List<Client>>>> watch(ClientsFilterParams? filter) async {
+    try {
+      return Right(_watch(filter));
+    } on FirebaseException catch (error) {
+      return Left(Failure.error(error.message));
+    }
+  }
+
+  Stream<List<Client>> _watch(ClientsFilterParams? filter) async* {
+    yield* clientsCollection.snapshots().map((snapshot) {
+      return snapshot.docs.map((e) => e.data()).toList();
+    });
+  }
+
+  @override
   Future<Either<Failure, Client>> create(ClientCreateParams params) async {
     try {
       final newClient = Client(
@@ -61,7 +76,7 @@ class ClientsFirebaseDataSource implements ClientsRepository {
   }
 
   @override
-  Future<Either<Failure, List<Client>>> getFiltered(ClientsFilterParams filter) async {
+  Future<Either<Failure, List<Client>>> getAll(ClientsFilterParams? filter) async {
     try {
       final documents = await clientsCollection.get();
       final clients = documents.docs.map((e) => e.data()).toList();

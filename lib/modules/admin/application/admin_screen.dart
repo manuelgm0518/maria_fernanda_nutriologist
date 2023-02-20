@@ -11,8 +11,8 @@ class AdminScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return AutoTabsRouter.pageView(
       routes: const [
-        ClientsViewRoute(),
-        NutritionPlansViewRoute(),
+        ClientsPageRoute(),
+        NutritionPlansPageRoute(),
       ],
       builder: (context, child, _) {
         final tabsRouter = AutoTabsRouter.of(context);
@@ -23,8 +23,8 @@ class AdminScreen extends StatelessWidget {
             currentIndex: tabsRouter.activeIndex,
             onTap: tabsRouter.setActiveIndex,
             items: const [
-              BottomNavigationBarItem(icon: Icon(UniconsLine.users_alt), label: 'Clientes'),
-              BottomNavigationBarItem(icon: Icon(UniconsLine.book_reader), label: 'Planes'),
+              BottomNavigationBarItem(icon: Icon(UniconsLine.users_alt), label: 'Clients'),
+              BottomNavigationBarItem(icon: Icon(UniconsLine.book_reader), label: 'Plans'),
             ],
           ),
         );
